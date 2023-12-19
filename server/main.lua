@@ -349,12 +349,21 @@ lib.callback.register("mdt:server:getWarrants", function(source)
     for _, conviction in pairs(convictions) do
         if conviction.warrant == "1" then
 			local playerData = GetPlayerFirstNameAndLastName(conviction.identifier)
-			WarrantData[#WarrantData+1] = {
-                identifier = conviction.identifier,
-                linkedincident = conviction.linkedincident,
-                name = ("%s %s"):format(playerData.firstname, playerData.lastname),
-                time = conviction.time,
-            }
+			if playerData then
+				WarrantData[#WarrantData+1] = {
+					identifier = conviction.identifier,
+					linkedincident = conviction.linkedincident,
+					name = ("%s %s"):format(playerData.firstname, playerData.lastname),
+					time = conviction.time,
+				}
+			else
+				WarrantData[#WarrantData+1] = {
+					identifier = conviction.identifier,
+					linkedincident = conviction.linkedincident,
+					name = "IDENTITE NON TROUVEE",
+					time = conviction.time,
+				}
+			end
         end
     end
     return WarrantData

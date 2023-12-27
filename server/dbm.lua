@@ -14,14 +14,12 @@ function AddLog(text)
     return MySQL.insert.await('INSERT INTO `mdt_logs` (`text`, `time`) VALUES (?,?)', {text, os.time() * 1000})
 end
 
-function GetNameFromId(identifier)
-	local result = MySQL.scalar.await('SELECT charinfo FROM players WHERE identifier = @identifier', { ['@identifier'] = identifier })
+function GetNameFromIdentifier(identifier)
+	local result = MySQL.scalar.await('SELECT firstname, lastname FROM users WHERE identifier = ?', { identifier })
     if result ~= nil then
-        local charinfo = json.decode(result)
-        local fullname = charinfo['firstname']..' '..charinfo['lastname']
-        return fullname
+        return ("%s %s"):format(result.firstname, result.lastname)
     else
-        --print('Player does not exist')
+        lib.print.error('Joueur introuvable')
         return nil
     end
 end

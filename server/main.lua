@@ -1940,13 +1940,10 @@ function GetVehicleInformation(plate)
 end
 
 function GetVehicleOwner(plate)
-
-	local vehData = MySQL.single.await('SELECT owner, plate FROM owned_vehicles WHERE plate = @plate', {['@plate'] = plate})
+	local vehData = MySQL.single.await('SELECT owner, plate FROM owned_vehicles WHERE plate = ?', {plate})
 	if vehData then
 		local identifier = vehData['owner']
-		local Player = ESX.GetPlayerFromIdentifier(identifier)
-		local owner = Player.name
-		return owner
+		return GetNameFromIdentifier(identifier) or "Propriétaire Introuvable"
 	end
 end
 

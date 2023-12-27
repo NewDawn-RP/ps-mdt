@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `mdt_convictions` (
 CREATE TABLE IF NOT EXISTS `mdt_incidents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author` VARCHAR(50) NOT NULL DEFAULT '',
-  `title` VARCHAR(50) NOT NULL DEFAULT '0',
+  `title` VARCHAR(120) NOT NULL DEFAULT '0',
   `details` text NOT NULL,
   `tags` text NOT NULL,
   `officersinvolved` text NOT NULL,
